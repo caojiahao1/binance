@@ -6,7 +6,6 @@ token = 'token' # 公众号PushPlus推送加 获取token。暂时失效，连接
 api_key = 'api_key'#币安pai
 api_secret = 'api_secret'
 ngrok_url = "ngrok_url"# 这里将你 ngrok 创建的公网地址粘贴到下面的字符串中
-client = Client(api_key, api_secret)
 
 def send_notification(title, content,token):
     # PushPlus服务平台的API接口地址
@@ -207,6 +206,7 @@ def data_processing(data,token=token):
     return 'ok'
 
 #收到POST
+client = Client(api_key, api_secret)
 app = Flask(__name__)
 @app.route('/', methods=['POST'])
 def receive_webhook():
@@ -216,7 +216,6 @@ def receive_webhook():
     data_processing(data)
     account_info = get_account_info()
     print("账户信息：%s" % account_info)
-
     return jsonify(account_info)
 if __name__ == '__main__':
     ngrok_url = ngrok_url
