@@ -12,7 +12,7 @@
 ##  设置信息
 -   添加库
   
-        pip install -r requirements.text
+        pip install -r requirements.txt
 -   修改代码
   
         添加币安api
