@@ -9,5 +9,4 @@ data = {
 "price" : "1.2303","leverage": "50"
 }
 re = requests.post(url,json=data)
-
 print(re.text)

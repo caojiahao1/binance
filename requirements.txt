@@ -1,3 +1,4 @@
 binance==0.3
 Flask==2.2.3
+
 python_binance==1.0.17

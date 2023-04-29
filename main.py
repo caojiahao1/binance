@@ -19,7 +19,7 @@ def send_notification(title, content,token):
     # 向PushPlus发送POST请求以推送通知
     res = requests.post(url, data)
 def get_account_info():
-    account = client.futures_account()     #账户
+    account = client.futures_account()    #账户
     account_info = {
         'totalWalletBalance': float(account['totalWalletBalance']),
         'totalMarginBalance': float(account['totalMarginBalance']),
