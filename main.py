@@ -43,14 +43,21 @@ def get_account_info():
             }
     return account_info
 def open_position(symbol, signal, leverage):
-
     # 获取交易对信息
+    limit=""
+    price_tick_size=""
+    qty_tick_size=''
     exchange_info = client.futures_exchange_info()
     for symbol_info in exchange_info['symbols']:
         if symbol_info['symbol'] == symbol:
-            #pricePrecision = symbol_info['pricePrecision'] #获取价格精度
-            quantity_precision = symbol_info['quantityPrecision']  # 获取数量精度
-            break
+            fil=symbol_info["filters"]
+            for f in fil:
+                if f['filterType'] == 'PRICE_FILTER':
+                    price_tick_size = float(f['tickSize'])
+                elif f['filterType'] == 'LOT_SIZE':
+                    qty_tick_size = float(f['stepSize'])
+            price_tick_size = len(str(price_tick_size).split('.')[1])#价格精度，ARB是4位小数
+            qty_tick_size= len(str(qty_tick_size).split('.')[1])#数量精度，一位小数
             
     if leverage!=50:
         leverage11 = client.futures_change_leverage(symbol=symbol, leverage=leverage)
@@ -67,17 +74,17 @@ def open_position(symbol, signal, leverage):
     if signal == 'Buy':
         side = 'BUY'
         position_side = 'LONG'
-        limit = round(price*(1-0.1/100),4)
+        limit = round(price*(1-0.1/100),price_tick_size)
         print('限价做多：%s'% limit)
     elif signal == 'Sell':
         side = 'SELL'
         position_side = 'SHORT'
-        limit = round(price*(1+0.1/100),4)
+        limit = round(price*(1+0.1/100),price_tick_size)
         print('限价做空:%s'% limit)
 
     # 计算下单数量
     quantity = (available_balance * 0.95) / limit
-    quantity = round(quantity, quantity_precision)
+    quantity = round(quantity, qty_tick_size)
 
     # 下单
     order = client.futures_create_order(
