@@ -59,9 +59,8 @@ def open_position(symbol, signal, leverage):
             price_tick_size = len(str(price_tick_size).split('.')[1])#价格精度，ARB是4位小数
             qty_tick_size= len(str(qty_tick_size).split('.')[1])#数量精度，一位小数
             
-    if leverage!=50:
-        leverage11 = client.futures_change_leverage(symbol=symbol, leverage=leverage)
-        print("杠杆修改成功！,当前杠杆倍数为：%s"%leverage)
+    leverage11 = client.futures_change_leverage(symbol=symbol, leverage=leverage)
+    print("杠杆设置成功！,当前杠杆倍数为：%s"%leverage)
 
     # 计算可用余额
     availableBalance = client.futures_account()["availableBalance"]
