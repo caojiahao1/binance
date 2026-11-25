@@ -1,4 +1,6 @@
-binance==0.3
-Flask==2.2.3
-
-python_binance==1.0.17
+# 代码里用的是 `from binance.client import Client`，来自 python-binance。
+# 注意：不要装 PyPI 上的 `binance` 包 —— 它和 python-binance 抢同一个
+# `binance` 命名空间，装了两个就 import 到错的那个。
+python-binance>=1.0.17
+Flask>=2.2.3
+requests>=2.28.2
